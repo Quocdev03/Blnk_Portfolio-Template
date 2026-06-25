@@ -1,6 +1,6 @@
 <script setup>
 import SectionIcon from "@/assets/icons/section-icon.svg";
-import { defineProps, computed } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   sectionTitle: {

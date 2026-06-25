@@ -1,19 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import AppSectionTitle from "@/components/AppSectionTitle.vue";
+import AppPortfolio from "@/components/portfolio/AppPortfolio.vue";
+
 import Hr1 from "@/assets/images/hr1.png";
 import Hr2 from "@/assets/images/hr2.png";
 import Hr3 from "@/assets/images/hr3.png";
 import Hr4 from "@/assets/images/hr4.png";
 import Hr5 from "@/assets/images/hr5.png";
 
-import Cs1 from "@/assets/images/cs1.png";
-import Cs2 from "@/assets/images/cs2.png";
-import Cs3 from "@/assets/images/cs3.png";
-import Cs4 from "@/assets/images/cs4.png";
-import Cs5 from "@/assets/images/cs5.png";
-import Cs6 from "@/assets/images/cs6.png";
-
-import AppSectionTitle from "@/components/AppSectionTitle.vue";
+import J1 from "@/assets/images/j1.png";
+import J2 from "@/assets/images/j2.png";
+import J3 from "@/assets/images/j3.png";
 
 import IconUiDesign from "@/assets/icons/menu-icon-01.svg";
 import IconDevelopment from "@/assets/icons/menu-icon-02.svg";
@@ -23,7 +21,6 @@ import IconMotion from "@/assets/icons/menu-icon-05.svg";
 import IconAdd from "@/assets/icons/add.svg";
 
 const activeIndex = ref(null);
-
 const toggleService = (index) => {
   activeIndex.value = activeIndex.value === index ? null : index;
 };
@@ -66,7 +63,7 @@ const services = [
   },
 ];
 
-const images = [
+const heroImages = [
   { src: Hr1, class: "col-span-5" },
   { src: Hr2, class: "row-start-2" },
   { src: Hr3, class: "col-span-4 row-start-2" },
@@ -89,44 +86,29 @@ const socialLinks = [
   },
 ];
 
-const portfolioList = [
+const journalList = [
   {
-    title: "FireFly",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs1,
+    image: J1,
+    time: "October 12, 2024",
+    title: "How to find inspiration and solve big design problems",
   },
   {
-    title: "Kozmo",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs2,
+    image: J2,
+    time: "September 12, 2024",
+    title: "What makes your design awesome?",
   },
   {
-    title: "Muko",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs3,
-  },
-  {
-    title: "Trinity",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs4,
-  },
-  {
-    title: "Mura App",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs5,
-  },
-  {
-    title: "Clonify icons",
-    badge: ["Artwork", "Branding", "3D & Motion"],
-    image: Cs6,
+    image: J3,
+    time: "August 12, 2024",
+    title: "How to create SVG-ready icon symbols in Sketch  ",
   },
 ];
 </script>
 <template>
   <div class="page-container">
     <!-- Header Bottom  -->
-    <section class="header-bottom mb-16">
-      <div class="flex justify-between items-center gap-8 mb-16">
+    <section class="header-bottom mb-20">
+      <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-8 mb-16">
         <h1 class="display-text-3">Carl Sagan. Visual designer</h1>
         <div class="flex flex-col gap-4 max-w-[515px]">
           <p class="heading-6">
@@ -138,7 +120,7 @@ const portfolioList = [
               v-for="item in socialLinks"
               :href="item.url"
               :key="item.name"
-              class="btn btn-sm btn-pill btn-outline-dark"
+              class="badge badge-sm badge-pill badge-outline-dark"
             >
               <span class="text-12-semi">{{ item.name }}</span>
             </a>
@@ -146,9 +128,9 @@ const portfolioList = [
         </div>
       </div>
       <div class="grid grid-cols-5 gap-4">
-        <div v-for="(img, index) in images" :key="index" :class="img.class">
+        <div v-for="(img, index) in heroImages" :key="index" :class="img.class">
           <img
-            :src="img.src"
+            :srcset="`${img.src} 2x`"
             alt=""
             class="h-[140px] w-full object-cover rounded-2xl cursor-pointer"
           />
@@ -157,7 +139,7 @@ const portfolioList = [
     </section>
 
     <!-- Content -->
-    <section class="content mb-16">
+    <section class="content mb-20">
       <AppSectionTitle class="mb-6" sectionTitle="services" />
       <div class="flex flex-col border-t border-solid border-Black-700">
         <div
@@ -199,7 +181,7 @@ const portfolioList = [
             "
           >
             <div class="overflow-hidden">
-              <div class="flex flex-col gap-3 pl-16 pr-6">
+              <div class="flex flex-col gap-3 pl-10 lg:pl-16 pr-6">
                 <p class="text-16-reg text-(--Gray-600) leading-relaxed">
                   {{ service.description }}
                 </p>
@@ -213,34 +195,25 @@ const portfolioList = [
       </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio mb-16">
-      <AppSectionTitle class="mb-6" sectionTitle="case studies" />
-      <div class="rounded-4xl grid grid-cols-2 gap-8">
-        <div
-          class="flex flex-col bg-[var(--color-Gray-100)] min-h-[588px] rounded-4xl overflow-hidden"
-          v-for="(item, index) in portfolioList"
-          :key="index"
-        >
-          <div class="max-w-[424px] mx-auto h-full">
+    <AppPortfolio />
+
+    <!-- Blog Section -->
+    <section class="blog mb-20">
+      <AppSectionTitle class="mb-6" sectionTitle="JOURNAL" />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-for="(item, index) in journalList" :key="index" class="flex flex-col">
+          <div class="aspect-4/3 rounded-3xl overflow-hidden mb-4">
             <img
-              :src="item.image"
+              :srcset="`${item.image}, ${item.image} 2x`"
               alt=""
-              class="w-full h-full object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-500 ease-in-out"
+              class="w-full h-full object-cover cursor-pointer"
             />
           </div>
-          <div class="flex flex-col gap-4 pt-6 pb-10 px-10">
-            <h1 class="heading-6 hover:text-(--Blue-500)">{{ item.title }}</h1>
-            <div class="flex flex-wrap items-center gap-2">
-              <span
-                class="btn btn-sm btn-pill btn-outline-dark"
-                v-for="(badge, bIndex) in item.badge"
-                :key="bIndex"
-              >
-                {{ badge }}
-              </span>
-            </div>
-          </div>
+          <span class="text-14-reg text-[color:var(--Blue-Black-500,#5F6980)] mb-1">{{
+            item.time
+          }}</span>
+          <h1 class="heading-7 flex-grow mb-2">{{ item.title }}</h1>
+          <a class="btn btn-underline w-fit" href="">Read more</a>
         </div>
       </div>
     </section>
